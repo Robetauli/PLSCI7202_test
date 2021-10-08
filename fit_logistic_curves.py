@@ -2,7 +2,6 @@
 For each county/year and crop progress variable in the crop yield dataset, fit a logistic curve to the crop progress data over the course of the year.
 This curve is then used to interpolate missing values for that variable.
 """
-
 import argparse
 import numpy as np
 import pandas as pd
@@ -15,6 +14,7 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import mean_absolute_error as MAE
 from scipy.optimize import curve_fit
 
+# Dataset files
 DATASET_FILE = "/mnt/beegfs/bulk/mirror/jyf6/datasets/crop_forecast/data/combined_dataset_weekly.npz"  # Input dataset (compressed)
 OUTPUT_FILE = '/mnt/beegfs/bulk/mirror/jyf6/datasets/crop_forecast/data/combined_dataset_weekly_logistic_interpolation'  # File path to output dataset to
 
@@ -34,7 +34,7 @@ COLUMN_NAMES = pd.read_csv(DATASET_CSV_FILE, index_col=False, nrows=0).columns.t
 TIME_INTERVALS = 52  # number of weeks in year
 
 # Read in data
-raw_data = np.load(DATASET_FILE) 
+raw_data = np.load(DATASET_FILE)
 data = raw_data['data']
 print("Data shape", data.shape)
 counties = data[:, 0].astype(int)
